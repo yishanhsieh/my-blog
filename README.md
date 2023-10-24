@@ -1,6 +1,6 @@
-# my-blog
-This will be my latest blog hosted on Github. Wordpress is expensive QAQ.
+# Google resources:
+Net Ninja - HOw to build a blog with node.js, express and mongoDB
+https://www.youtube.com/watch?v=xQVM33SAjLM
 
-# Learning resource:
-How To Build A Markdown Blog Using Node.js, Express, And MongoDB
-https://www.youtube.com/watch?v=1NrHkjlWVhM&t=1947s
+Web development simplified
+https://www.youtube.com/watch?v=-RCnNyD0L-s
