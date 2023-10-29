@@ -1,9 +1,11 @@
 const express = require("express");
 const mongoose = require("mongoose"); //connect to MongoDB
+const Article = require("./models/article");
 const articleRouter = require("./routes/articles");
+const methodOverride = require("method-override");
 const app = express();
 
-mongoose.connect("mongodb://localhost/blog", {
+mongoose.connect("mongodb://0.0.0.0:27017/blog", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
@@ -11,24 +13,16 @@ mongoose.connect("mongodb://localhost/blog", {
 app.set("view engine", "ejs");
 
 app.use(express.urlencoded({ extended: false }));
-// tell Express how to get data from mongoDB, extended: false => any parameter in the article form is accessible.
-app.use("/articles", articleRouter);
-//this should come after article route is set
+app.use(methodOverride("_method")); //whenever we set the parameter _method in any type of form, it will override the method.
 
-app.get("/", (req, res) => {
-  const articles = [
-    {
-      title: "test article",
-      createdAt: new Date(),
-      description: "Test description",
-    },
-    {
-      title: "test article2",
-      createdAt: new Date(),
-      description: "Test description2",
-    },
-  ];
+// tell Express how to get data from mongoDB, extended: false => any parameter in the article form is accessible.
+
+app.get("/", async (req, res) => {
+  const articles = await Article.find().sort({ createdAt: "desc" });
   res.render("articles/index", { articles: articles });
 });
 
-app.listen(5000);
+app.use("/articles", articleRouter);
+//this should come after article route is set
+
+app.listen(5001);
